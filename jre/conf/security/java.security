@@ -631,6 +631,26 @@ jdk.disabled.namedCurves = secp112r1, secp112r2, secp128r1, secp128r2, \
 jdk.certpath.disabledAlgorithms=
 
 #
+# Legacy algorithms for certification path (CertPath) processing and
+# signed JAR files.
+#
+# In some environments, a certain algorithm or key length may be undesirable
+# but is not yet disabled.
+#
+# Tools such as keytool and jarsigner may emit warnings when these legacy
+# algorithms are used. See the man pages for those tools for more information.
+#
+# The syntax is the same as the "jdk.certpath.disabledAlgorithms" and
+# "jdk.jar.disabledAlgorithms" security properties.
+#
+# Note: This property is currently used by the JDK Reference
+# implementation. It is not guaranteed to be examined and used by other
+# implementations.
+
+jdk.security.legacyAlgorithms=SHA1, \
+    RSA keySize < 2048, DSA keySize < 2048
+
+#
 # Algorithm restrictions for signed JAR files
 #
 # In some environments, certain algorithms or key lengths may be undesirable
@@ -705,9 +725,7 @@ jdk.jar.disabledAlgorithms=
 # Example:
 #   jdk.tls.disabledAlgorithms=MD5, SSLv3, DSA, RSA keySize < 2048, \
 #       rsa_pkcs1_sha1, secp224r1
-jdk.tls.disabledAlgorithms=SSLv3, TLSv1, TLSv1.1, RC4, DES, MD5withRSA, \
-    DH keySize < 1024, EC keySize < 224, 3DES_EDE_CBC, anon, NULL, \
-    include jdk.disabled.namedCurves
+jdk.tls.disabledAlgorithms=NULL
 
 #
 # Legacy algorithms for Secure Socket Layer/Transport Layer Security (SSL/TLS)
@@ -936,19 +954,7 @@ crypto.policy=unlimited
 # Note: This property is currently used by the JDK Reference implementation. It
 # is not guaranteed to be examined and used by other implementations.
 #
-jdk.xml.dsig.secureValidationPolicy=\
-    disallowAlg http://www.w3.org/TR/1999/REC-xslt-19991116,\
-    disallowAlg http://www.w3.org/2001/04/xmldsig-more#rsa-md5,\
-    disallowAlg http://www.w3.org/2001/04/xmldsig-more#hmac-md5,\
-    disallowAlg http://www.w3.org/2001/04/xmldsig-more#md5,\
-    maxTransforms 5,\
-    maxReferences 30,\
-    disallowReferenceUriSchemes file http https,\
-    minKeySize RSA 1024,\
-    minKeySize DSA 1024,\
-    minKeySize EC 224,\
-    noDuplicateIds,\
-    noRetrievalMethodLoops
+jdk.xml.dsig.secureValidationPolicy=
 
 #
 # Serialization process-wide filter
